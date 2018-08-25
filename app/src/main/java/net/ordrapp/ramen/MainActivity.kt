@@ -15,7 +15,7 @@ import kotlinx.android.synthetic.main.activity_main.*
 class MainActivity : AppCompatActivity() {
 
     private lateinit var fusedLocationClient: FusedLocationProviderClient
-    private lateinit var loc: Location
+    private lateinit var userLocation: Location
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -32,11 +32,10 @@ class MainActivity : AppCompatActivity() {
         }
 
         else {
-            fusedLocationClient.lastLocation.addOnSuccessListener { location: Location? ->  loc}
-
-            val map = supportFragmentManager.findFragmentById(R.id.map) as SupportMapFragment
-            map.getMapAsync {}
-
+            fusedLocationClient.lastLocation.addOnSuccessListener { location ->  userLocation = location!!}
         }
+
+        val map = supportFragmentManager.findFragmentById(R.id.map) as SupportMapFragment
+        map.getMapAsync {}
     }
 }
