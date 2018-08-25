@@ -4,11 +4,14 @@ import android.Manifest
 import android.content.pm.PackageManager
 import android.location.Location
 import android.os.Bundle
+import android.view.MenuItem
 import android.view.View
 import androidx.appcompat.app.AppCompatActivity
 import androidx.constraintlayout.widget.ConstraintLayout
 import androidx.core.app.ActivityCompat
 import androidx.core.content.ContextCompat
+import androidx.core.view.GravityCompat
+import androidx.drawerlayout.widget.DrawerLayout
 import androidx.lifecycle.Observer
 import androidx.lifecycle.ViewModelProvider
 import androidx.lifecycle.ViewModelProviders
@@ -40,6 +43,8 @@ class MainActivity : AppCompatActivity() {
 
     private val bottomSheetBehavior: BottomSheetBehavior<ConstraintLayout> by lazy { BottomSheetBehavior.from(bottomSheet) }
 
+    private lateinit var menuDrawer: DrawerLayout
+
     override fun onCreate(savedInstanceState: Bundle?) {
         AndroidInjection.inject(this)
         super.onCreate(savedInstanceState)
@@ -47,8 +52,20 @@ class MainActivity : AppCompatActivity() {
 
         setSupportActionBar(toolbar)
         supportActionBar?.title = ""
+        supportActionBar?.apply {
+            setDisplayHomeAsUpEnabled(true)
+            setHomeAsUpIndicator(R.drawable.ic_menu)
+        }
 
         viewModel = ViewModelProviders.of(this, viewModelFactory)[MainViewModel::class.java]
+
+        navView.setNavigationItemSelectedListener { menuItem ->
+            menuItem.isChecked = true
+            drawerLayout.closeDrawers()
+
+            //TODO Make the UI update based on what the user clicks in the menu
+            true
+        }
 
         // if (userHasNotSignedIn) {
         // startActivity(Intent(this, OnboardingActivity::class.java))
@@ -157,6 +174,16 @@ class MainActivity : AppCompatActivity() {
         if (::googleMap.isInitialized) {
             val lastLocation = LatLng(location.latitude, location.longitude)
             googleMap.moveCamera(CameraUpdateFactory.newLatLngZoom(lastLocation, 16.0f))
+        }
+    }
+
+    override fun onOptionsItemSelected(item: MenuItem): Boolean {
+        return when (item.itemId) {
+            android.R.id.home -> {
+                drawerLayout.openDrawer(GravityCompat.START)
+                true
+            }
+            else -> super.onOptionsItemSelected(item)
         }
     }
 
