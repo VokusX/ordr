@@ -11,6 +11,12 @@ import kotlinx.android.synthetic.main.restaurant_row.view.*
 import net.ordrapp.ramen.R
 import net.ordrapp.ramen.data.Restaurant
 import net.ordrapp.ramen.ui.restaurant.RestaurantActivity
+import androidx.core.content.ContextCompat.startActivity
+import android.os.Bundle
+import android.app.Activity
+import androidx.core.app.ActivityOptionsCompat
+import androidx.core.util.Pair
+
 
 class RestaurantAdapter(private val context: Context, var userLastLocation: android.location.Location?, var values: List<Restaurant> = emptyList())
     : RecyclerView.Adapter<RestaurantAdapter.ViewHolder>() {
@@ -31,7 +37,18 @@ class RestaurantAdapter(private val context: Context, var userLastLocation: andr
                 val intent = Intent(context, RestaurantActivity::class.java)
                 intent.putExtra(RestaurantActivity.RESTAURANT_OBJECT_KEY, values[adapterPosition])
 
-                context.startActivity(intent)
+                val extras = ArrayList<androidx.core.util.Pair<View, String>>()
+                extras.add(Pair.create(itemView.imageView, "image"))
+
+                val sharedTransition = ActivityOptionsCompat.makeSceneTransitionAnimation(
+                        context as Activity,
+                        *extras.toTypedArray()
+                )
+
+                val bundle = Bundle()
+                bundle.putAll(sharedTransition.toBundle())
+
+                context.startActivity(intent, bundle)
             }
         }
 
