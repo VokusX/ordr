@@ -82,6 +82,7 @@ class MainActivity : AppCompatActivity() {
             ActivityCompat.requestPermissions(this, arrayOf(Manifest.permission.ACCESS_FINE_LOCATION), 0)
         } else {
             fusedLocationClient.lastLocation.addOnSuccessListener { location ->
+                location ?: return@addOnSuccessListener
                 viewModel.updateUserLocation(location)
             }
         }
