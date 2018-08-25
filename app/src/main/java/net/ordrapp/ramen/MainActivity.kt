@@ -15,13 +15,12 @@ import com.google.android.gms.location.FusedLocationProviderClient
 import com.google.android.gms.location.LocationServices
 import com.google.android.gms.maps.CameraUpdateFactory
 import com.google.android.gms.maps.GoogleMap
-import com.google.android.gms.maps.SupportMapFragment
 import com.google.android.gms.maps.model.LatLng
 import com.google.android.gms.maps.model.MarkerOptions
 import dagger.android.AndroidInjection
 import kotlinx.android.synthetic.main.activity_main.*
-import net.ordrapp.ramen.ui.home.MainViewModel
 import net.ordrapp.ramen.ui.OnboardingActivity
+import net.ordrapp.ramen.ui.home.MainViewModel
 import javax.inject.Inject
 
 class MainActivity : AppCompatActivity() {
@@ -63,14 +62,46 @@ class MainActivity : AppCompatActivity() {
             // Display "it" on the map.
         })
 
-        val map = supportFragmentManager.findFragmentById(R.id.map) as SupportMapFragment
-        map.getMapAsync { googleMap = it }
-
-        map.getMapAsync {
+        mapView.onCreate(savedInstanceState)
+        mapView.getMapAsync {
             googleMap = it
             centerToLocation()
         }
+    }
 
+    override fun onStart() {
+        super.onStart()
+        mapView.onStart()
+    }
+
+    override fun onResume() {
+        super.onResume()
+        mapView.onResume()
+    }
+
+    override fun onPause() {
+        super.onPause()
+        mapView.onPause()
+    }
+
+    override fun onStop() {
+        super.onStop()
+        mapView.onStop()
+    }
+
+    override fun onDestroy() {
+        super.onDestroy()
+        mapView.onDestroy()
+    }
+
+    override fun onLowMemory() {
+        super.onLowMemory()
+        mapView.onLowMemory()
+    }
+
+    override fun onSaveInstanceState(outState: Bundle?) {
+        super.onSaveInstanceState(outState)
+        mapView.onSaveInstanceState(outState)
     }
 
     private fun centerToLocation() {
