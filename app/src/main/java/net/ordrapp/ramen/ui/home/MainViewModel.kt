@@ -38,8 +38,8 @@ class MainViewModel @Inject constructor(private val repository: MainRepository) 
     fun getNearbyStops(location: Location?) {
         repository.getNearbyRestaurants()
                 .subscribe({
-                    Log.d("MainActivity", it.data.size.toString())
-                    restaurantsPublisher.onNext(it.data)
+                    Log.d("MainActivity", it.restaurants.size.toString())
+                    restaurantsPublisher.onNext(it.restaurants)
                 }, {
                     it.printStackTrace()
                 })

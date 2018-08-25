@@ -69,7 +69,7 @@ dependencies {
     compile 'com.google.dagger:dagger-android-support:2.15'
     kapt 'com.google.dagger:dagger-android-processor:2.16'
 
-    implementation 'com.google.firebase:firebase-auth:16.0.3'
+    //implementation 'com.google.firebase:firebase-auth:16.0.3'
     implementation 'com.google.android.gms:play-services-auth:15.0.1'
 
     //base dependency

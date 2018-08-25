@@ -22,6 +22,7 @@ import kotlinx.android.synthetic.main.activity_main.*
 import net.ordrapp.ramen.ui.OnboardingActivity
 import net.ordrapp.ramen.ui.home.MainViewModel
 import net.ordrapp.ramen.ui.home.MapsAdapter
+import javax.inject.Inject
 
 class MainActivity : AppCompatActivity() {
 
@@ -29,6 +30,7 @@ class MainActivity : AppCompatActivity() {
     private var userLocation: Location? = null
     private lateinit var googleMap: GoogleMap
 
+    @Inject
     lateinit var viewModelFactory: ViewModelProvider.Factory
     private lateinit var viewModel: MainViewModel
 
