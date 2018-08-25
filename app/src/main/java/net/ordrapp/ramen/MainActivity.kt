@@ -20,6 +20,7 @@ import com.google.android.gms.maps.model.LatLng
 import com.google.android.material.bottomsheet.BottomSheetBehavior
 import dagger.android.AndroidInjection
 import kotlinx.android.synthetic.main.activity_main.*
+import net.ordrapp.ramen.data.Restaurant
 import net.ordrapp.ramen.ui.home.MainViewModel
 import net.ordrapp.ramen.ui.home.MapsAdapter
 import net.ordrapp.ramen.ui.home.RestaurantAdapter
@@ -62,7 +63,8 @@ class MainActivity : AppCompatActivity() {
             }
         }
 
-        resultsList.adapter = RestaurantAdapter(this, viewModel.userLocation.value)
+        // TODO: Remove dummy data and allow server to provide all data.
+        resultsList.adapter = RestaurantAdapter(this, viewModel.userLocation.value, Restaurant.RESTAURANTS)
 
         viewModel.restaurantsData.observe(this, Observer {
             it ?: return@Observer
@@ -98,6 +100,9 @@ class MainActivity : AppCompatActivity() {
             googleMap = it
             centerToLocation(viewModel.userLocation.value)
             mapAdapter.attach(mapView, googleMap)
+
+            mapAdapter.restaurants = Restaurant.RESTAURANTS
+            mapAdapter.notifyDataSetChanged()
 
             // Display the user's current location on the map.
             if (ContextCompat.checkSelfPermission(this, Manifest.permission.ACCESS_FINE_LOCATION)

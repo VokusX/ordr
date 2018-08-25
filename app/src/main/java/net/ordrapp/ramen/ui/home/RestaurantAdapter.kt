@@ -5,6 +5,7 @@ import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import androidx.recyclerview.widget.RecyclerView
+import com.bumptech.glide.Glide
 import kotlinx.android.synthetic.main.restaurant_row.view.*
 import net.ordrapp.ramen.R
 import net.ordrapp.ramen.data.Restaurant
@@ -41,12 +42,14 @@ class RestaurantAdapter(private val context: Context, var userLastLocation: andr
                 val distance = userLastLocation!!.distanceTo(dummyLocation)
 
                 if (distance < 100f) {
-                    itemView.distance.text = "$distance m"
+                    itemView.distance.text = context.getString(R.string.distance_metres, distance)
                 } else {
-                    itemView.distance.text = "${distance / 100} km"
+                    itemView.distance.text = context.getString(R.string.distance_kilometres, distance / 100)
                 }
 
             }
+
+            Glide.with(itemView).load(item.pictures[0]).into(itemView.imageView)
         }
     }
 }
