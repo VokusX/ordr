@@ -52,8 +52,7 @@
             android:layout_height="wrap_content"
             android:background="@color/colorBackground"
             android:minHeight="64dp"
-            app:behavior_hideable="false"
-            app:behavior_peekHeight="112dp"
+            app:behavior_peekHeight="128dp"
             app:layout_behavior="com.google.android.material.bottomsheet.BottomSheetBehavior">
 
             <androidx.recyclerview.widget.RecyclerView

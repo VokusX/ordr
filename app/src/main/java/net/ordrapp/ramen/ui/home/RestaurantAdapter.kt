@@ -57,6 +57,9 @@ class RestaurantAdapter(private val context: Context, var userLastLocation: andr
             itemView.ratingBar.rating = item.rating
             itemView.ratingCount.text = item.numReviews.toString()
 
+            itemView.hereNotice.visibility = View.GONE
+            itemView.checkInNowButton.visibility = View.GONE
+
             if (userLastLocation != null) {
                 val dummyLocation = android.location.Location("dummy").apply {
                     latitude = item.location.lat
@@ -71,9 +74,15 @@ class RestaurantAdapter(private val context: Context, var userLastLocation: andr
                     itemView.distance.text = context.getString(R.string.distance_kilometres, distance / 100)
                 }
 
+                if (adapterPosition == 0 && distance < 50f) {
+                    itemView.hereNotice.visibility = View.VISIBLE
+                    itemView.checkInNowButton.visibility = View.VISIBLE
+                }
+
             }
 
             Glide.with(itemView).load(item.pictures[0]).into(itemView.imageView)
+
         }
     }
 }

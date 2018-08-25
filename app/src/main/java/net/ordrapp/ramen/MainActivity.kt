@@ -12,7 +12,6 @@ import androidx.constraintlayout.widget.ConstraintLayout
 import androidx.core.app.ActivityCompat
 import androidx.core.content.ContextCompat
 import androidx.core.view.GravityCompat
-import androidx.drawerlayout.widget.DrawerLayout
 import androidx.lifecycle.Observer
 import androidx.lifecycle.ViewModelProvider
 import androidx.lifecycle.ViewModelProviders
@@ -26,7 +25,6 @@ import com.google.firebase.auth.FirebaseAuth
 import dagger.android.AndroidInjection
 import kotlinx.android.synthetic.main.activity_main.*
 import net.ordrapp.ramen.data.RESTAURANTS
-import net.ordrapp.ramen.data.Restaurant
 import net.ordrapp.ramen.ui.OnboardingActivity
 import net.ordrapp.ramen.ui.home.MainViewModel
 import net.ordrapp.ramen.ui.home.MapsAdapter
@@ -34,7 +32,6 @@ import net.ordrapp.ramen.ui.home.RestaurantAdapter
 import net.ordrapp.ramen.ui.restaurant.RestaurantActivity
 import net.ordrapp.ramen.utils.dp
 import nz.co.trademe.mapme.annotations.OnMapAnnotationClickListener
-import java.security.Permission
 import javax.inject.Inject
 
 class MainActivity : AppCompatActivity() {
@@ -49,9 +46,6 @@ class MainActivity : AppCompatActivity() {
     private val mapAdapter: MapsAdapter by lazy { MapsAdapter(this@MainActivity, emptyList()) }
 
     private val bottomSheetBehavior: BottomSheetBehavior<ConstraintLayout> by lazy { BottomSheetBehavior.from(bottomSheet) }
-
-    private lateinit var menuDrawer: DrawerLayout
-
 
     override fun onCreate(savedInstanceState: Bundle?) {
         AndroidInjection.inject(this)
@@ -102,7 +96,7 @@ class MainActivity : AppCompatActivity() {
             resultsAdapter.values = it.restaurants
             it.diffResult.dispatchUpdatesTo(resultsAdapter)
 
-            bottomSheetBehavior.peekHeight = dp(116)
+            bottomSheetBehavior.peekHeight = dp(128)
         })
 
         viewModel.userLocation.observe(this, Observer {
@@ -131,10 +125,10 @@ class MainActivity : AppCompatActivity() {
             mapAdapter.restaurants = RESTAURANTS
             mapAdapter.notifyDataSetChanged()
 
-            mapAdapter.setOnAnnotationClickListener(OnMapAnnotationClickListener {
-                val annotationClick = mapAdapter.restaurants[it.position]
+            mapAdapter.setOnAnnotationClickListener(OnMapAnnotationClickListener { annotation ->
+                val clickedRestaurant = mapAdapter.restaurants[annotation.position]
                 val intent = Intent(this@MainActivity, RestaurantActivity::class.java)
-                intent.putExtra(RestaurantActivity.RESTAURANT_OBJECT_KEY, annotationClick)
+                intent.putExtra(RestaurantActivity.RESTAURANT_OBJECT_KEY, clickedRestaurant)
 
                 startActivity(intent)
                 true
@@ -211,7 +205,7 @@ class MainActivity : AppCompatActivity() {
     override fun onRequestPermissionsResult(requestCode: Int, permissions: Array<out String>, grantResults: IntArray) {
         if (grantResults.isNotEmpty() && grantResults[0] == PackageManager.PERMISSION_GRANTED) {
             if (ContextCompat.checkSelfPermission(this, Manifest.permission.ACCESS_FINE_LOCATION)
-                    != PackageManager.PERMISSION_GRANTED) {
+                    == PackageManager.PERMISSION_GRANTED) {
                 fusedLocationClient.lastLocation.addOnSuccessListener {
                     viewModel.updateUserLocation(it)
                 }

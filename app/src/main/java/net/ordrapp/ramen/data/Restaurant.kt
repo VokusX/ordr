@@ -99,4 +99,16 @@ private val RESTAURANT_C = Restaurant("Restaurant C",
         true,
         listOf("https://images.unsplash.com/photo-1516903022779-81a73028310f?ixlib=rb-0.3.5&ixid=eyJhcHBfaWQiOjEyMDd9&s=b5170ed4c4857dd6f0494cba2b47b7ee&auto=format&fit=crop&w=1185&q=80"))
 
-val RESTAURANTS = listOf(RESTAURANT_A, RESTAURANT_B, RESTAURANT_C)
+private val RESTAURANT_D = Restaurant("Top Hat HQ",
+        "tophathq",
+        4.9f,
+        865,
+        "Top Hat HQ is an interesting place to grab something to eat. A wide variety of food ranging from Indian food to deep fried chicken exists with some ice cream and breakfast cereal somewhere in between. It's good enough.",
+        "1113 Colonel By Dr.",
+        Location(43.668602, -79.393138),
+        listOf(Hour("friday", 900, 2200, "EST")),
+        true,
+        listOf("https://images.unsplash.com/photo-1515346347659-f1dd36c261b7?ixlib=rb-0.3.5&ixid=eyJhcHBfaWQiOjEyMDd9&s=1e8af261faa466eb957a5b1210096003&auto=format&fit=crop&w=2394&q=80"))
+
+
+val RESTAURANTS = listOf(RESTAURANT_D, RESTAURANT_A, RESTAURANT_B, RESTAURANT_C, RESTAURANT_B, RESTAURANT_A, RESTAURANT_B, RESTAURANT_C, RESTAURANT_A, RESTAURANT_B, RESTAURANT_C, RESTAURANT_A)
