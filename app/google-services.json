@@ -1,0 +1,55 @@
+{
+  "project_info": {
+    "project_number": "463301637678",
+    "firebase_url": "https://ordr-72810.firebaseio.com",
+    "project_id": "ordr-72810",
+    "storage_bucket": "ordr-72810.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:463301637678:android:20e1b729d8acdee8",
+        "android_client_info": {
+          "package_name": "net.ordrapp.ramen"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "463301637678-n3eqebf2rdqt15oms43ptakk1kjrn1m4.apps.googleusercontent.com",
+          "client_type": 1,
+          "android_info": {
+            "package_name": "net.ordrapp.ramen",
+            "certificate_hash": "5b456bd814e378bf10991c50a2e8f592e5616cbd"
+          }
+        },
+        {
+          "client_id": "463301637678-savhpfidjprjdd7kuk5qtok731b43021.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyAZd4Gq0sku6xzy1p48imzn6Svqbqsnicc"
+        }
+      ],
+      "services": {
+        "analytics_service": {
+          "status": 1
+        },
+        "appinvite_service": {
+          "status": 2,
+          "other_platform_oauth_client": [
+            {
+              "client_id": "463301637678-savhpfidjprjdd7kuk5qtok731b43021.apps.googleusercontent.com",
+              "client_type": 3
+            }
+          ]
+        },
+        "ads_service": {
+          "status": 2
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}
