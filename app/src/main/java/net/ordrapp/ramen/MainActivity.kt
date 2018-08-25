@@ -7,6 +7,7 @@ import android.location.Location
 import android.os.Bundle
 import android.widget.LinearLayout
 import androidx.appcompat.app.AppCompatActivity
+import androidx.constraintlayout.widget.ConstraintLayout
 import androidx.core.app.ActivityCompat
 import androidx.core.content.ContextCompat
 import androidx.lifecycle.Observer
@@ -37,6 +38,8 @@ class MainActivity : AppCompatActivity() {
     private lateinit var viewModel: MainViewModel
 
     private val mapAdapter: MapsAdapter by lazy { MapsAdapter(this@MainActivity, emptyList()) }
+
+    private val bottomSheetBehavior: BottomSheetBehavior<ConstraintLayout> by lazy { BottomSheetBehavior.from(bottomSheet) }
 
     override fun onCreate(savedInstanceState: Bundle?) {
         AndroidInjection.inject(this)
@@ -122,7 +125,6 @@ class MainActivity : AppCompatActivity() {
         userLocation ?: return
         if (::googleMap.isInitialized) {
             val lastLocation = LatLng(userLocation!!.latitude, userLocation!!.longitude)
-            googleMap.addMarker(MarkerOptions().position(lastLocation))
             googleMap.moveCamera(CameraUpdateFactory.newLatLngZoom(lastLocation, 16.0f))
         }
     }
