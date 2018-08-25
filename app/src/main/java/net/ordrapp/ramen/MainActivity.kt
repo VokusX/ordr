@@ -5,6 +5,7 @@ import android.content.Intent
 import android.content.pm.PackageManager
 import android.location.Location
 import android.os.Bundle
+import android.widget.LinearLayout
 import androidx.appcompat.app.AppCompatActivity
 import androidx.core.app.ActivityCompat
 import androidx.core.content.ContextCompat
@@ -17,6 +18,7 @@ import com.google.android.gms.maps.CameraUpdateFactory
 import com.google.android.gms.maps.GoogleMap
 import com.google.android.gms.maps.model.LatLng
 import com.google.android.gms.maps.model.MarkerOptions
+import com.google.android.material.bottomsheet.BottomSheetBehavior
 import dagger.android.AndroidInjection
 import kotlinx.android.synthetic.main.activity_main.*
 import net.ordrapp.ramen.ui.OnboardingActivity
@@ -72,6 +74,12 @@ class MainActivity : AppCompatActivity() {
             googleMap = it
             centerToLocation()
             mapAdapter.attach(mapView, googleMap)
+
+            // Display the user's current location on the map.
+            if (ContextCompat.checkSelfPermission(this, Manifest.permission.ACCESS_FINE_LOCATION)
+                    == PackageManager.PERMISSION_GRANTED) {
+                googleMap.isMyLocationEnabled = true
+            }
         }
     }
 
