@@ -69,9 +69,6 @@ class MainActivity : AppCompatActivity() {
             mapAdapter.restaurants = it.restaurants
             it.diffResult.dispatchUpdatesTo(mapAdapter)
 
-            progressBar.visibility = View.GONE
-            progressText.visibility = View.GONE
-
             val resultsAdapter = resultsList.adapter as RestaurantAdapter
             resultsAdapter.values = it.restaurants
             it.diffResult.dispatchUpdatesTo(resultsAdapter)
@@ -90,6 +87,10 @@ class MainActivity : AppCompatActivity() {
                 val visibleRegion = googleMap.projection.visibleRegion
                 viewModel.getNearbyStops(visibleRegion)
             }
+        })
+
+        viewModel.isLoading.observe(this, Observer {
+            progressBar.visibility = if (it == true) View.VISIBLE else View.GONE
         })
 
         mapView.onCreate(savedInstanceState)

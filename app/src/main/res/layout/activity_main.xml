@@ -19,23 +19,24 @@
         android:layout_height="match_parent"
         android:layout_gravity="start"
         android:fitsSystemWindows="true"
-        app:menu="@menu/drawer_view"
-        app:headerLayout="@layout/nav_header">
+        app:headerLayout="@layout/nav_header"
+        app:menu="@menu/drawer_view">
 
         <LinearLayout
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:layout_gravity="bottom"
             android:orientation="vertical">
+
             <TextView
                 android:id="@+id/settings"
-                android:text="@string/settings_nav_text"
                 android:layout_width="match_parent"
                 android:layout_height="48dp"
                 android:gravity="start"
-                android:textAppearance="@style/TextAppearance.AppCompat.Body1"
                 android:paddingStart="16dp"
-                android:paddingEnd="0dp"/>
+                android:paddingEnd="0dp"
+                android:text="@string/settings_nav_text"
+                android:textAppearance="@style/TextAppearance.AppCompat.Body1" />
         </LinearLayout>
 
     </com.google.android.material.navigation.NavigationView>
@@ -64,63 +65,49 @@
             android:background="@color/colorPrimary"
             android:theme="@style/AppTheme.AppBarOverlay">
 
-        <TextView
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:fontFamily="@font/didact_gothic"
-            android:text="@string/app_name"
-            android:textAppearance="@style/TextAppearance.Widget.AppCompat.Toolbar.Title"
-            android:background="#00000000"
-            android:textColor="#FFFFFF"
-            android:textSize="22sp"
-            android:textStyle="bold" />
-    </androidx.appcompat.widget.Toolbar>
-
-    <androidx.constraintlayout.widget.ConstraintLayout
-        android:id="@+id/bottomSheet"
-        android:background="@color/colorBackground"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:minHeight="64dp"
-        app:layout_behavior="com.google.android.material.bottomsheet.BottomSheetBehavior"
-        app:behavior_hideable="false"
-        app:behavior_peekHeight="64dp">
-
-            <ProgressBar
-                android:id="@+id/progressBar"
-                style="?android:attr/progressBarStyle"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_marginStart="8dp"
-                android:layout_marginTop="8dp"
-                app:layout_constraintStart_toStartOf="parent"
-                app:layout_constraintTop_toTopOf="parent" />
-
             <TextView
-                android:id="@+id/progressText"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:layout_marginStart="16dp"
-                android:layout_marginTop="20dp"
-                android:layout_marginEnd="8dp"
-                android:text="@string/restaurants_loading_text"
-                android:textColor="?android:attr/textColorPrimary"
-                android:textSize="16sp"
-                app:layout_constraintEnd_toEndOf="parent"
-                app:layout_constraintHorizontal_bias="0.0"
-                app:layout_constraintStart_toEndOf="@+id/progressBar"
-                app:layout_constraintTop_toTopOf="parent" />
+                android:background="#00000000"
+                android:fontFamily="@font/nunito"
+                android:text="@string/app_name"
+                android:textAppearance="@style/TextAppearance.Widget.AppCompat.Toolbar.Title"
+                android:textColor="#FFFFFF"
+                android:textSize="22sp"
+                android:textStyle="bold" />
+        </androidx.appcompat.widget.Toolbar>
 
-        <androidx.recyclerview.widget.RecyclerView
-            android:id="@+id/resultsList"
+        <androidx.constraintlayout.widget.ConstraintLayout
+            android:id="@+id/bottomSheet"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            app:layout_constraintBottom_toBottomOf="parent"
-            app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintStart_toStartOf="parent"
-            app:layoutManager="androidx.recyclerview.widget.LinearLayoutManager">
+            android:background="@color/colorBackground"
+            android:minHeight="64dp"
+            app:behavior_hideable="false"
+            app:behavior_peekHeight="64dp"
+            app:layout_behavior="com.google.android.material.bottomsheet.BottomSheetBehavior">
 
+            <androidx.recyclerview.widget.RecyclerView
+                android:id="@+id/resultsList"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                app:layoutManager="androidx.recyclerview.widget.LinearLayoutManager"
+                app:layout_constraintBottom_toBottomOf="parent"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintStart_toStartOf="parent">
+
+            </androidx.recyclerview.widget.RecyclerView>
         </androidx.constraintlayout.widget.ConstraintLayout>
+
+        <ProgressBar
+            android:id="@+id/progressBar"
+            style="?android:attr/progressBarStyleHorizontal"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:indeterminate="true"
+            app:layout_anchor="@+id/toolbar"
+            app:layout_anchorGravity="bottom|center" />
+
     </androidx.coordinatorlayout.widget.CoordinatorLayout>
 
 </androidx.drawerlayout.widget.DrawerLayout>

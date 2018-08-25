@@ -15,6 +15,7 @@ import io.reactivex.schedulers.Schedulers
 import net.ordrapp.ramen.data.NearbyRestaurantsRequest
 import net.ordrapp.ramen.data.Restaurant
 import net.ordrapp.ramen.repository.MainRepository
+import java.util.concurrent.TimeUnit
 import javax.inject.Inject
 
 class MainViewModel @Inject constructor(private val repository: MainRepository) : ViewModel() {
@@ -27,6 +28,9 @@ class MainViewModel @Inject constructor(private val repository: MainRepository) 
     fun updateUserLocation(newLocation: Location) {
         _userLocation.value = newLocation
     }
+
+    private val _isLoading = MutableLiveData<Boolean>()
+    val isLoading: LiveData<Boolean> = _isLoading
 
     private val disposables = CompositeDisposable()
 
@@ -45,6 +49,8 @@ class MainViewModel @Inject constructor(private val repository: MainRepository) 
     }
 
     fun getNearbyStops(visibleRegion: VisibleRegion) {
+        _isLoading.value = true
+
         val request = if (_userLocation.value == null) {
             NearbyRestaurantsRequest(net.ordrapp.ramen.data.Location(visibleRegion.latLngBounds.center),
                     listOf(net.ordrapp.ramen.data.Location(visibleRegion.latLngBounds.northeast), net.ordrapp.ramen.data.Location(visibleRegion.latLngBounds.southwest)), 25)
@@ -57,9 +63,11 @@ class MainViewModel @Inject constructor(private val repository: MainRepository) 
                         {
                             Log.d("MainActivity", it.restaurants.size.toString())
                             restaurantsPublisher.onNext(it.restaurants)
+                            _isLoading.postValue(false)
                         },
                         {
                             it.printStackTrace()
+                            _isLoading.postValue(false)
                         })
                 .addTo(disposables)
     }
