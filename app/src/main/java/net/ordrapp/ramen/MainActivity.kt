@@ -10,6 +10,7 @@ import androidx.core.app.ActivityCompat
 import androidx.core.content.ContextCompat
 import androidx.lifecycle.Observer
 import androidx.lifecycle.ViewModelProvider
+import androidx.lifecycle.ViewModelProviders
 import com.google.android.gms.location.FusedLocationProviderClient
 import com.google.android.gms.location.LocationServices
 import com.google.android.gms.maps.CameraUpdateFactory
@@ -17,6 +18,7 @@ import com.google.android.gms.maps.GoogleMap
 import com.google.android.gms.maps.SupportMapFragment
 import com.google.android.gms.maps.model.LatLng
 import com.google.android.gms.maps.model.MarkerOptions
+import dagger.android.AndroidInjection
 import kotlinx.android.synthetic.main.activity_main.*
 import net.ordrapp.ramen.ui.home.MainViewModel
 import net.ordrapp.ramen.ui.OnboardingActivity
@@ -33,11 +35,14 @@ class MainActivity : AppCompatActivity() {
     private lateinit var viewModel: MainViewModel
 
     override fun onCreate(savedInstanceState: Bundle?) {
+        AndroidInjection.inject(this)
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_main)
 
         setSupportActionBar(toolbar)
         supportActionBar?.title = ""
+
+        viewModel = ViewModelProviders.of(this, viewModelFactory)[MainViewModel::class.java]
 
         // if (userHasNotSignedIn) {
         startActivity(Intent(this, OnboardingActivity::class.java))
@@ -53,6 +58,7 @@ class MainActivity : AppCompatActivity() {
             }
         }
 
+        viewModel.getNearbyStops(userLocation)
         viewModel.restaurantsData.observe(this, Observer {
             // Display "it" on the map.
         })

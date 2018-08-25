@@ -1,11 +1,14 @@
 package net.ordrapp.ramen.ui.home
 
+import android.location.Location
+import android.util.Log
 import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
 import androidx.recyclerview.widget.DiffUtil
 import io.reactivex.disposables.CompositeDisposable
 import io.reactivex.processors.PublishProcessor
+import io.reactivex.rxkotlin.addTo
 import io.reactivex.schedulers.Schedulers
 import net.ordrapp.ramen.data.Restaurant
 import net.ordrapp.ramen.repository.MainRepository
@@ -29,6 +32,18 @@ class MainViewModel @Inject constructor(private val repository: MainRepository) 
                 }
                 .skip(1)
                 .subscribe(_restaurantsData::postValue)
+                .addTo(disposables)
+    }
+
+    fun getNearbyStops(location: Location?) {
+        repository.getNearbyRestaurants()
+                .subscribe({
+                    Log.d("MainActivity", it.data.size.toString())
+                    restaurantsPublisher.onNext(it.data)
+                }, {
+                    it.printStackTrace()
+                })
+                .addTo(disposables)
     }
 
 }
