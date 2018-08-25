@@ -5,6 +5,7 @@ import android.content.Intent
 import android.content.pm.PackageManager
 import android.location.Location
 import android.os.Bundle
+import android.view.View
 import android.widget.LinearLayout
 import androidx.appcompat.app.AppCompatActivity
 import androidx.constraintlayout.widget.ConstraintLayout
@@ -25,6 +26,8 @@ import kotlinx.android.synthetic.main.activity_main.*
 import net.ordrapp.ramen.ui.OnboardingActivity
 import net.ordrapp.ramen.ui.home.MainViewModel
 import net.ordrapp.ramen.ui.home.MapsAdapter
+import net.ordrapp.ramen.ui.home.RestaurantAdapter
+import net.ordrapp.ramen.utils.dp
 import javax.inject.Inject
 
 class MainActivity : AppCompatActivity() {
@@ -52,7 +55,7 @@ class MainActivity : AppCompatActivity() {
         viewModel = ViewModelProviders.of(this, viewModelFactory)[MainViewModel::class.java]
 
         // if (userHasNotSignedIn) {
-        startActivity(Intent(this, OnboardingActivity::class.java))
+        // startActivity(Intent(this, OnboardingActivity::class.java))
         // }
 
         if (ContextCompat.checkSelfPermission(this, Manifest.permission.ACCESS_FINE_LOCATION)
@@ -61,15 +64,32 @@ class MainActivity : AppCompatActivity() {
         } else {
             fusedLocationClient.lastLocation.addOnSuccessListener { location ->
                 userLocation = location!!
+                // TODO: Move this to the ViewModel?
+                val resultsAdapter = resultsList.adapter as RestaurantAdapter
+                
+                resultsAdapter.userLastLocation = userLocation
+                resultsAdapter.notifyDataSetChanged()
+
                 centerToLocation()
             }
         }
+
+        resultsList.adapter = RestaurantAdapter(this, userLocation)
 
         viewModel.getNearbyStops(userLocation)
         viewModel.restaurantsData.observe(this, Observer {
             it ?: return@Observer
             mapAdapter.restaurants = it.restaurants
             it.diffResult.dispatchUpdatesTo(mapAdapter)
+
+            progressBar.visibility = View.GONE
+            progressText.visibility = View.GONE
+
+            val resultsAdapter = resultsList.adapter as RestaurantAdapter
+            resultsAdapter.values = it.restaurants
+            it.diffResult.dispatchUpdatesTo(resultsAdapter)
+
+            bottomSheetBehavior.peekHeight = dp(116)
         })
 
         mapView.onCreate(savedInstanceState)
