@@ -1,4 +1,8 @@
 <resources>
     <string name="app_name">Ordr</string>
-    <string name="restaurants_loading_text">Looking for restaurants nearby...</string>
+    <string name="restaurants_loading_text">Looking for restaurants nearby…</string>
+    <string name="profile_text">Profile</string>
+    <string name="explored_nav_text">Explored</string>
+    <string name="payments_nav_text">Payments</string>
+    <string name="settings_nav_text">Settings</string>
 </resources>
