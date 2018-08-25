@@ -21,7 +21,7 @@ import dagger.android.AndroidInjection
 import kotlinx.android.synthetic.main.activity_main.*
 import net.ordrapp.ramen.ui.OnboardingActivity
 import net.ordrapp.ramen.ui.home.MainViewModel
-import javax.inject.Inject
+import net.ordrapp.ramen.ui.home.MapsAdapter
 
 class MainActivity : AppCompatActivity() {
 
@@ -29,9 +29,10 @@ class MainActivity : AppCompatActivity() {
     private var userLocation: Location? = null
     private lateinit var googleMap: GoogleMap
 
-    @Inject
     lateinit var viewModelFactory: ViewModelProvider.Factory
     private lateinit var viewModel: MainViewModel
+
+    private val mapAdapter: MapsAdapter by lazy { MapsAdapter(this@MainActivity, emptyList()) }
 
     override fun onCreate(savedInstanceState: Bundle?) {
         AndroidInjection.inject(this)
@@ -59,13 +60,16 @@ class MainActivity : AppCompatActivity() {
 
         viewModel.getNearbyStops(userLocation)
         viewModel.restaurantsData.observe(this, Observer {
-            // Display "it" on the map.
+            it ?: return@Observer
+            mapAdapter.restaurants = it.restaurants
+            it.diffResult.dispatchUpdatesTo(mapAdapter)
         })
 
         mapView.onCreate(savedInstanceState)
         mapView.getMapAsync {
             googleMap = it
             centerToLocation()
+            mapAdapter.attach(mapView, googleMap)
         }
     }
 
