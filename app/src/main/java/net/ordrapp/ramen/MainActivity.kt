@@ -31,7 +31,10 @@ import net.ordrapp.ramen.ui.OnboardingActivity
 import net.ordrapp.ramen.ui.home.MainViewModel
 import net.ordrapp.ramen.ui.home.MapsAdapter
 import net.ordrapp.ramen.ui.home.RestaurantAdapter
+import net.ordrapp.ramen.ui.restaurant.RestaurantActivity
 import net.ordrapp.ramen.utils.dp
+import nz.co.trademe.mapme.annotations.OnMapAnnotationClickListener
+import java.security.Permission
 import javax.inject.Inject
 
 class MainActivity : AppCompatActivity() {
@@ -127,6 +130,15 @@ class MainActivity : AppCompatActivity() {
             mapAdapter.restaurants = RESTAURANTS
             mapAdapter.notifyDataSetChanged()
 
+            mapAdapter.setOnAnnotationClickListener(OnMapAnnotationClickListener {
+                val annotationClick = mapAdapter.restaurants[it.position]
+                val intent = Intent(this@MainActivity, RestaurantActivity::class.java)
+                intent.putExtra(RestaurantActivity.RESTAURANT_OBJECT_KEY, annotationClick)
+
+                startActivity(intent)
+                true
+            })
+
             // Display the user's current location on the map.
             if (ContextCompat.checkSelfPermission(this, Manifest.permission.ACCESS_FINE_LOCATION)
                     == PackageManager.PERMISSION_GRANTED) {
@@ -138,6 +150,8 @@ class MainActivity : AppCompatActivity() {
                 viewModel.getNearbyStops(visibleRegion)
             }
         }
+
+
     }
 
     override fun onStart() {
@@ -190,6 +204,17 @@ class MainActivity : AppCompatActivity() {
                 true
             }
             else -> super.onOptionsItemSelected(item)
+        }
+    }
+
+    override fun onRequestPermissionsResult(requestCode: Int, permissions: Array<out String>, grantResults: IntArray) {
+        if (grantResults.isNotEmpty() && grantResults[0] == PackageManager.PERMISSION_GRANTED) {
+            if (ContextCompat.checkSelfPermission(this, Manifest.permission.ACCESS_FINE_LOCATION)
+                    != PackageManager.PERMISSION_GRANTED) {
+                fusedLocationClient.lastLocation.addOnSuccessListener {
+                    viewModel.updateUserLocation(it)
+                }
+            }
         }
     }
 
