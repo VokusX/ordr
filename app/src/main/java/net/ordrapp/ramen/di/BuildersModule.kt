@@ -5,6 +5,7 @@ import dagger.Binds
 import dagger.Module
 import dagger.android.ContributesAndroidInjector
 import net.ordrapp.ramen.MainActivity
+import net.ordrapp.ramen.ui.OnboardingActivity
 
 @Module
 abstract class BuildersModule {
@@ -14,5 +15,8 @@ abstract class BuildersModule {
 
     @ContributesAndroidInjector
     abstract fun bindMainActivity(): MainActivity
+
+    @ContributesAndroidInjector
+    abstract fun bindOnboardingActivity(): OnboardingActivity
 
 }
