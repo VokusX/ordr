@@ -1,5 +1,7 @@
 package net.ordrapp.ramen.data
 
+import android.os.Parcel
+import android.os.Parcelable
 import com.google.gson.annotations.SerializedName
 
 /**
@@ -12,6 +14,31 @@ import com.google.gson.annotations.SerializedName
 data class Hour(@SerializedName("dayOfWeek") val dayOfWeek: String,
                 @SerializedName("open") val open: Int,
                 @SerializedName("close") val close: Int,
-                @SerializedName("timezone") val timezone: String) {
+                @SerializedName("timezone") val timezone: String) : Parcelable {
+
+    constructor(parcel: Parcel) : this(
+            parcel.readString()!!,
+            parcel.readInt(),
+            parcel.readInt(),
+            parcel.readString()!!)
+
+    override fun writeToParcel(parcel: Parcel, p1: Int) {
+        parcel.writeString(dayOfWeek)
+        parcel.writeInt(open)
+        parcel.writeInt(close)
+        parcel.writeString(timezone)
+    }
+
+    override fun describeContents(): Int = 0
+
+    companion object CREATOR : Parcelable.Creator<Hour> {
+        override fun createFromParcel(parcel: Parcel): Hour {
+            return Hour(parcel)
+        }
+
+        override fun newArray(size: Int): Array<Hour?> {
+            return arrayOfNulls(size)
+        }
+    }
 
 }
