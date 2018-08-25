@@ -5,7 +5,7 @@ import retrofit2.http.GET
 
 interface ApiService {
 
-    @GET("nearby")
-    fun getNearbyRestaurants(): Single<List<Restaurant>>
+    @GET("5b80f1333400005400ecb2cd")
+    fun getNearbyRestaurants(): Single<RestaurantApiResponse>
 
 }

@@ -24,7 +24,7 @@ class NetworkModule {
 
     companion object {
 
-        private const val BASE_URL = "https://dummy.com/"
+        private const val BASE_URL = "http://www.mocky.io/v2/"
 
     }
 }

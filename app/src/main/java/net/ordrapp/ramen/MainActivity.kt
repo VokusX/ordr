@@ -8,6 +8,8 @@ import android.os.Bundle
 import androidx.appcompat.app.AppCompatActivity
 import androidx.core.app.ActivityCompat
 import androidx.core.content.ContextCompat
+import androidx.lifecycle.Observer
+import androidx.lifecycle.ViewModelProvider
 import com.google.android.gms.location.FusedLocationProviderClient
 import com.google.android.gms.location.LocationServices
 import com.google.android.gms.maps.CameraUpdateFactory
@@ -16,13 +18,19 @@ import com.google.android.gms.maps.SupportMapFragment
 import com.google.android.gms.maps.model.LatLng
 import com.google.android.gms.maps.model.MarkerOptions
 import kotlinx.android.synthetic.main.activity_main.*
+import net.ordrapp.ramen.ui.home.MainViewModel
 import net.ordrapp.ramen.ui.OnboardingActivity
+import javax.inject.Inject
 
 class MainActivity : AppCompatActivity() {
 
     private val fusedLocationClient: FusedLocationProviderClient by lazy { LocationServices.getFusedLocationProviderClient(this) }
     private var userLocation: Location? = null
     private lateinit var googleMap: GoogleMap
+
+    @Inject
+    lateinit var viewModelFactory: ViewModelProvider.Factory
+    private lateinit var viewModel: MainViewModel
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -44,6 +52,10 @@ class MainActivity : AppCompatActivity() {
                 centerToLocation()
             }
         }
+
+        viewModel.restaurantsData.observe(this, Observer {
+            // Display "it" on the map.
+        })
 
         val map = supportFragmentManager.findFragmentById(R.id.map) as SupportMapFragment
         map.getMapAsync { googleMap = it }

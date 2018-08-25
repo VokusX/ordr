@@ -4,7 +4,7 @@ import androidx.lifecycle.ViewModel
 import dagger.Binds
 import dagger.Module
 import dagger.multibindings.IntoMap
-import net.ordrapp.ramen.ui.MainViewModel
+import net.ordrapp.ramen.ui.home.MainViewModel
 
 @Module
 abstract class ViewModelModule {

@@ -1,6 +1,5 @@
 package net.ordrapp.ramen.data
 
-import androidx.room.ColumnInfo
 import com.google.gson.annotations.SerializedName
 
 /**
