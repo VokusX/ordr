@@ -1,11 +1,13 @@
 package net.ordrapp.ramen.data
 
 import io.reactivex.Single
+import retrofit2.http.Body
 import retrofit2.http.GET
+import retrofit2.http.POST
 
 interface ApiService {
 
-    @GET("5b810a6b3400008400ecb2e0")
-    fun getNearbyRestaurants(): Single<RestaurantApiResponse>
+    @POST("search/nearby")
+    fun getNearbyRestaurants(@Body request: NearbyRestaurantsRequest): Single<RestaurantApiResponse>
 
 }
