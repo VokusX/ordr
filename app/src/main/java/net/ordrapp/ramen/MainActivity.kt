@@ -1,6 +1,7 @@
 package net.ordrapp.ramen
 
 import android.Manifest
+import android.content.Intent
 import android.content.pm.PackageManager
 import android.location.Location
 import android.os.Bundle
@@ -21,10 +22,12 @@ import com.google.android.gms.maps.CameraUpdateFactory
 import com.google.android.gms.maps.GoogleMap
 import com.google.android.gms.maps.model.LatLng
 import com.google.android.material.bottomsheet.BottomSheetBehavior
+import com.google.firebase.auth.FirebaseAuth
 import dagger.android.AndroidInjection
 import kotlinx.android.synthetic.main.activity_main.*
 import net.ordrapp.ramen.data.RESTAURANTS
 import net.ordrapp.ramen.data.Restaurant
+import net.ordrapp.ramen.ui.OnboardingActivity
 import net.ordrapp.ramen.ui.home.MainViewModel
 import net.ordrapp.ramen.ui.home.MapsAdapter
 import net.ordrapp.ramen.ui.home.RestaurantAdapter
@@ -45,6 +48,7 @@ class MainActivity : AppCompatActivity() {
     private val bottomSheetBehavior: BottomSheetBehavior<ConstraintLayout> by lazy { BottomSheetBehavior.from(bottomSheet) }
 
     private lateinit var menuDrawer: DrawerLayout
+
 
     override fun onCreate(savedInstanceState: Bundle?) {
         AndroidInjection.inject(this)
@@ -68,9 +72,10 @@ class MainActivity : AppCompatActivity() {
             true
         }
 
-        // if (userHasNotSignedIn) {
-        // startActivity(Intent(this, OnboardingActivity::class.java))
-        // }
+        val auth = FirebaseAuth.getInstance()
+        if (auth.currentUser == null) {
+            startActivity(Intent(this, OnboardingActivity::class.java))
+        }
 
         if (ContextCompat.checkSelfPermission(this, Manifest.permission.ACCESS_FINE_LOCATION)
                 != PackageManager.PERMISSION_GRANTED) {
