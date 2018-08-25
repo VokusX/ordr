@@ -1,6 +1,7 @@
 package net.ordrapp.ramen.ui.home
 
 import android.content.Context
+import android.content.Intent
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
@@ -9,6 +10,7 @@ import com.bumptech.glide.Glide
 import kotlinx.android.synthetic.main.restaurant_row.view.*
 import net.ordrapp.ramen.R
 import net.ordrapp.ramen.data.Restaurant
+import net.ordrapp.ramen.ui.restaurant.RestaurantActivity
 
 class RestaurantAdapter(private val context: Context, var userLastLocation: android.location.Location?, var values: List<Restaurant> = emptyList())
     : RecyclerView.Adapter<RestaurantAdapter.ViewHolder>() {
@@ -25,7 +27,12 @@ class RestaurantAdapter(private val context: Context, var userLastLocation: andr
 
     inner class ViewHolder(itemView: View) : RecyclerView.ViewHolder(itemView) {
         init {
-            itemView.setOnClickListener { /* TODO */ }
+            itemView.setOnClickListener {
+                val intent = Intent(context, RestaurantActivity::class.java)
+                intent.putExtra(RestaurantActivity.RESTAURANT_OBJECT_KEY, values[adapterPosition])
+
+                context.startActivity(intent)
+            }
         }
 
         fun bind(item: Restaurant) {

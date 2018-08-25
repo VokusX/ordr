@@ -25,6 +25,7 @@ import com.google.android.material.bottomsheet.BottomSheetBehavior
 import com.google.firebase.auth.FirebaseAuth
 import dagger.android.AndroidInjection
 import kotlinx.android.synthetic.main.activity_main.*
+import net.ordrapp.ramen.data.RESTAURANTS
 import net.ordrapp.ramen.data.Restaurant
 import net.ordrapp.ramen.ui.OnboardingActivity
 import net.ordrapp.ramen.ui.home.MainViewModel
@@ -86,7 +87,7 @@ class MainActivity : AppCompatActivity() {
         }
 
         // TODO: Remove dummy data and allow server to provide all data.
-        resultsList.adapter = RestaurantAdapter(this, viewModel.userLocation.value, Restaurant.RESTAURANTS)
+        resultsList.adapter = RestaurantAdapter(this, viewModel.userLocation.value, RESTAURANTS)
 
         viewModel.restaurantsData.observe(this, Observer {
             it ?: return@Observer
@@ -123,7 +124,7 @@ class MainActivity : AppCompatActivity() {
             centerToLocation(viewModel.userLocation.value)
             mapAdapter.attach(mapView, googleMap)
 
-            mapAdapter.restaurants = Restaurant.RESTAURANTS
+            mapAdapter.restaurants = RESTAURANTS
             mapAdapter.notifyDataSetChanged()
 
             // Display the user's current location on the map.
