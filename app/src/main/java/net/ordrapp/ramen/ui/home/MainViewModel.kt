@@ -6,10 +6,13 @@ import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
 import androidx.recyclerview.widget.DiffUtil
+import com.google.android.gms.maps.model.LatLngBounds
+import com.google.android.gms.maps.model.VisibleRegion
 import io.reactivex.disposables.CompositeDisposable
 import io.reactivex.processors.PublishProcessor
 import io.reactivex.rxkotlin.addTo
 import io.reactivex.schedulers.Schedulers
+import net.ordrapp.ramen.data.NearbyRestaurantsRequest
 import net.ordrapp.ramen.data.Restaurant
 import net.ordrapp.ramen.repository.MainRepository
 import javax.inject.Inject
@@ -18,6 +21,12 @@ class MainViewModel @Inject constructor(private val repository: MainRepository) 
 
     private val _restaurantsData = MutableLiveData<RestaurantResults>()
     val restaurantsData: LiveData<RestaurantResults> = _restaurantsData
+
+    private val _userLocation = MutableLiveData<Location>()
+    val userLocation: LiveData<Location> = _userLocation
+    fun updateUserLocation(newLocation: Location) {
+        _userLocation.value = newLocation
+    }
 
     private val disposables = CompositeDisposable()
 
@@ -35,14 +44,23 @@ class MainViewModel @Inject constructor(private val repository: MainRepository) 
                 .addTo(disposables)
     }
 
-    fun getNearbyStops(location: Location?) {
-        repository.getNearbyRestaurants()
-                .subscribe({
-                    Log.d("MainActivity", it.restaurants.size.toString())
-                    restaurantsPublisher.onNext(it.restaurants)
-                }, {
-                    it.printStackTrace()
-                })
+    fun getNearbyStops(visibleRegion: VisibleRegion) {
+        val request = if (_userLocation.value == null) {
+            NearbyRestaurantsRequest(net.ordrapp.ramen.data.Location(visibleRegion.latLngBounds.center),
+                    listOf(net.ordrapp.ramen.data.Location(visibleRegion.latLngBounds.northeast), net.ordrapp.ramen.data.Location(visibleRegion.latLngBounds.southwest)), 25)
+        } else {
+            NearbyRestaurantsRequest(net.ordrapp.ramen.data.Location(_userLocation.value!!),
+                    listOf(net.ordrapp.ramen.data.Location(visibleRegion.latLngBounds.northeast), net.ordrapp.ramen.data.Location(visibleRegion.latLngBounds.southwest)), 25)
+        }
+        repository.getNearbyRestaurants(request)
+                .subscribe(
+                        {
+                            Log.d("MainActivity", it.restaurants.size.toString())
+                            restaurantsPublisher.onNext(it.restaurants)
+                        },
+                        {
+                            it.printStackTrace()
+                        })
                 .addTo(disposables)
     }
 
