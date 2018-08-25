@@ -22,6 +22,7 @@ import com.google.android.gms.maps.CameraUpdateFactory
 import com.google.android.gms.maps.GoogleMap
 import com.google.android.gms.maps.model.LatLng
 import com.google.android.material.bottomsheet.BottomSheetBehavior
+import com.google.firebase.auth.FirebaseAuth
 import dagger.android.AndroidInjection
 import kotlinx.android.synthetic.main.activity_main.*
 import net.ordrapp.ramen.data.Restaurant
@@ -48,7 +49,6 @@ class MainActivity : AppCompatActivity() {
     private lateinit var menuDrawer: DrawerLayout
 
 
-
     override fun onCreate(savedInstanceState: Bundle?) {
         AndroidInjection.inject(this)
         super.onCreate(savedInstanceState)
@@ -71,9 +71,10 @@ class MainActivity : AppCompatActivity() {
             true
         }
 
-        // if (userHasNotSignedIn) {
-         startActivity(Intent(this, OnboardingActivity::class.java))
-        // }
+        val auth = FirebaseAuth.getInstance()
+        if (auth.currentUser == null) {
+            startActivity(Intent(this, OnboardingActivity::class.java))
+        }
 
         if (ContextCompat.checkSelfPermission(this, Manifest.permission.ACCESS_FINE_LOCATION)
                 != PackageManager.PERMISSION_GRANTED) {
