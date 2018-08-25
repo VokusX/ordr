@@ -14,6 +14,7 @@ import com.google.android.gms.maps.CameraUpdateFactory
 import com.google.android.gms.maps.GoogleMap
 import com.google.android.gms.maps.SupportMapFragment
 import com.google.android.gms.maps.model.LatLng
+import com.google.android.gms.maps.model.MarkerOptions
 import kotlinx.android.synthetic.main.activity_main.*
 import net.ordrapp.ramen.ui.OnboardingActivity
 
@@ -58,7 +59,8 @@ class MainActivity : AppCompatActivity() {
         userLocation ?: return
         if (::googleMap.isInitialized) {
             val lastLocation = LatLng(userLocation!!.latitude, userLocation!!.longitude)
-            googleMap.moveCamera(CameraUpdateFactory.newLatLng(lastLocation))
+            googleMap.addMarker(MarkerOptions().position(lastLocation))
+            googleMap.moveCamera(CameraUpdateFactory.newLatLngZoom(lastLocation, 16.0f))
         }
     }
 
