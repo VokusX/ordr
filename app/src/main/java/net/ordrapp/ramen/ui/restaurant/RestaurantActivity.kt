@@ -1,7 +1,10 @@
 package net.ordrapp.ramen.ui.restaurant
 
+import android.content.Intent
+import android.net.Uri
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
+import android.view.MenuItem
 import com.bumptech.glide.Glide
 import kotlinx.android.synthetic.main.activity_restaurant.*
 import net.ordrapp.ramen.R
@@ -27,6 +30,23 @@ class RestaurantActivity : AppCompatActivity() {
         reviewCount.text = restaurant.numReviews.toString()
         addressText.text = restaurant.address
         description.text = restaurant.description
+
+        addressLink.setOnClickListener {
+            val intent = Intent(Intent.ACTION_VIEW)
+            val geoUri = Uri.parse("geo:0,0?q=${restaurant.address}")
+
+            intent.data = geoUri
+            startActivity(intent)
+        }
+    }
+
+    override fun onOptionsItemSelected(item: MenuItem?): Boolean {
+        when (item?.itemId) {
+            android.R.id.home -> finish()
+            null -> { }
+        }
+
+        return super.onOptionsItemSelected(item)
     }
 
     companion object {
