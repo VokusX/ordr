@@ -29,6 +29,7 @@ import kotlinx.android.synthetic.main.activity_main.*
 import kotlinx.android.synthetic.main.nav_header.*
 import net.ordrapp.ramen.data.RESTAURANTS
 import net.ordrapp.ramen.ui.OnboardingActivity
+import net.ordrapp.ramen.ui.cart.CartActivity
 import net.ordrapp.ramen.ui.home.MainViewModel
 import net.ordrapp.ramen.ui.home.MapsAdapter
 import net.ordrapp.ramen.ui.home.RestaurantAdapter
@@ -65,8 +66,11 @@ class MainActivity : AppCompatActivity() {
         viewModel = ViewModelProviders.of(this, viewModelFactory)[MainViewModel::class.java]
 
         navView.setNavigationItemSelectedListener { menuItem ->
-            menuItem.isChecked = true
             drawerLayout.closeDrawers()
+
+            when (menuItem.itemId) {
+                R.id.nav_gallery -> startActivity(Intent(this, CartActivity::class.java))
+            }
 
             //TODO Make the UI update based on what the user clicks in the menu
             true
