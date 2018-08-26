@@ -11,7 +11,7 @@ interface ApiService {
     fun getNearbyRestaurants(@Body request: NearbyRestaurantsRequest): Single<RestaurantApiResponse>
 
     @POST("search/menu")
-    fun getMenu(@Body request: MenuRequest): Single<List<MenuItem>>
+    fun getMenu(@Body request: MenuRequest): Single<Map<String, List<MenuItem>>>
 
     @POST("order")
     fun placeOrder()
