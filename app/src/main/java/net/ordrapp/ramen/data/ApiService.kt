@@ -7,7 +7,7 @@ import retrofit2.http.POST
 
 interface ApiService {
 
-    @POST("search/nearby")
+    @POST("search/findNearby")
     fun getNearbyRestaurants(@Body request: NearbyRestaurantsRequest): Single<RestaurantApiResponse>
 
     @POST("search/menu")

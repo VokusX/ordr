@@ -71,7 +71,7 @@ class RestaurantAdapter(private val context: Context, var userLastLocation: andr
                 if (distance < 100f) {
                     itemView.distance.text = context.getString(R.string.distance_metres, distance)
                 } else {
-                    itemView.distance.text = context.getString(R.string.distance_kilometres, distance / 100)
+                    itemView.distance.text = context.getString(R.string.distance_kilometres, distance / 1000)
                 }
 
                 if (adapterPosition == 0 && distance < 50f) {
@@ -81,7 +81,9 @@ class RestaurantAdapter(private val context: Context, var userLastLocation: andr
 
             }
 
-            Glide.with(itemView).load(item.pictures[0]).into(itemView.imageView)
+            if (item.pictures != null && item.pictures.isNotEmpty()) {
+                Glide.with(itemView).load(item.pictures[0]).into(itemView.imageView)
+            }
 
         }
     }

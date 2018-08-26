@@ -16,7 +16,6 @@ import androidx.core.view.GravityCompat
 import androidx.lifecycle.Observer
 import androidx.lifecycle.ViewModelProvider
 import androidx.lifecycle.ViewModelProviders
-import com.bumptech.glide.Glide
 import com.google.android.gms.auth.api.signin.GoogleSignIn
 import com.google.android.gms.location.FusedLocationProviderClient
 import com.google.android.gms.location.LocationServices
@@ -91,7 +90,7 @@ class MainActivity : AppCompatActivity() {
         }
 
         // TODO: Remove dummy data and allow server to provide all data.
-        resultsList.adapter = RestaurantAdapter(this, viewModel.userLocation.value, RESTAURANTS)
+        resultsList.adapter = RestaurantAdapter(this, viewModel.userLocation.value)
 
         viewModel.restaurantsData.observe(this, Observer {
             it ?: return@Observer
@@ -127,7 +126,6 @@ class MainActivity : AppCompatActivity() {
 
             emailText.text = it.email
             displayName.text = it.name
-            Glide.with(this@MainActivity).load(it.photo).into(profilePic)
         })
 
         mapView.onCreate(savedInstanceState)
@@ -135,9 +133,6 @@ class MainActivity : AppCompatActivity() {
             googleMap = it
             centerToLocation(viewModel.userLocation.value)
             mapAdapter.attach(mapView, googleMap)
-
-            mapAdapter.restaurants = RESTAURANTS
-            mapAdapter.notifyDataSetChanged()
 
             mapAdapter.setOnAnnotationClickListener(OnMapAnnotationClickListener { annotation ->
                 val clickedRestaurant = mapAdapter.restaurants[annotation.position]
