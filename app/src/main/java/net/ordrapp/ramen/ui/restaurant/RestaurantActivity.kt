@@ -5,18 +5,31 @@ import android.net.Uri
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
 import android.view.MenuItem
+import androidx.lifecycle.Observer
+import androidx.lifecycle.ViewModelProvider
+import androidx.lifecycle.ViewModelProviders
 import com.bumptech.glide.Glide
+import dagger.android.AndroidInjection
 import kotlinx.android.synthetic.main.activity_restaurant.*
 import net.ordrapp.ramen.R
 import net.ordrapp.ramen.data.Restaurant
+import net.ordrapp.ramen.ui.menu.MenuAdapter
+import javax.inject.Inject
 
 class RestaurantActivity : AppCompatActivity() {
 
     private lateinit var restaurant: Restaurant
 
+    @Inject
+    lateinit var viewModelFactory: ViewModelProvider.Factory
+    private lateinit var viewModel: RestaurantViewModel
+
     override fun onCreate(savedInstanceState: Bundle?) {
+        AndroidInjection.inject(this)
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_restaurant)
+
+        viewModel = ViewModelProviders.of(this, viewModelFactory)[RestaurantViewModel::class.java]
 
         setSupportActionBar(toolbar)
         supportActionBar?.setDisplayHomeAsUpEnabled(true)
@@ -38,6 +51,11 @@ class RestaurantActivity : AppCompatActivity() {
             intent.data = geoUri
             startActivity(intent)
         }
+
+        viewModel.getMenu(restaurant.uuid)
+        viewModel.menuData.observe(this, Observer {
+            recyclerView.adapter = MenuAdapter(this@RestaurantActivity, it)
+        })
     }
 
     override fun onOptionsItemSelected(item: MenuItem?): Boolean {

@@ -11,7 +11,7 @@
     <string name="restaurant_check_in">Check In</string>
     <string name="restaurant_reserve">Reserve</string>
     <string name="restaurant_address_icon">Address Icon</string>
-    <string name="restaurant_open_menu">Open Menu</string>
+    <string name="restaurant_open_menu">Open Full Menu</string>
     <string name="check_in_now">Check in Now</string>
     <string name="at_this_restaurant">At this restaurant?</string>
 </resources>

@@ -74,7 +74,7 @@ class RestaurantAdapter(private val context: Context, var userLastLocation: andr
                     itemView.distance.text = context.getString(R.string.distance_kilometres, distance / 1000)
                 }
 
-                if (adapterPosition == 0 && distance < 50f) {
+                if (adapterPosition == 0 && distance < 15f) {
                     itemView.hereNotice.visibility = View.VISIBLE
                     itemView.checkInNowButton.visibility = View.VISIBLE
                 }

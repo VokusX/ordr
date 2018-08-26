@@ -1,11 +1,11 @@
 package net.ordrapp.ramen.ui.restaurant
 
-import android.view.MenuItem
 import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
 import io.reactivex.disposables.CompositeDisposable
 import io.reactivex.rxkotlin.addTo
+import net.ordrapp.ramen.data.MenuItem
 import net.ordrapp.ramen.repository.MenuRepository
 import javax.inject.Inject
 
@@ -19,7 +19,7 @@ class RestaurantViewModel @Inject constructor(private val repository: MenuReposi
     fun getMenu(uuid: String) {
         repository.getMenuForRestaurant(uuid)
                 .subscribe({
-                    _menuData::postValue
+                    _menuData.value = it[it.keys.first()]
                 }, {
                     it.printStackTrace()
                 })

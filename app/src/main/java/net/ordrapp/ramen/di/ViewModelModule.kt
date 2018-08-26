@@ -20,16 +20,16 @@ abstract class ViewModelModule {
     @Binds
     @IntoMap
     @ViewModelKey(CartViewModel::class)
-    abstract fun bindCartViewModel(mainViewModel: CartViewModel): ViewModel
+    abstract fun bindCartViewModel(cartViewModel: CartViewModel): ViewModel
 
     @Binds
     @IntoMap
     @ViewModelKey(RestaurantViewModel::class)
-    abstract fun bindRestaurantViewModel(mainViewModel: RestaurantViewModel): ViewModel
+    abstract fun bindRestaurantViewModel(restaurantViewModel: RestaurantViewModel): ViewModel
 
     @Binds
     @IntoMap
     @ViewModelKey(MenuViewModel::class)
-    abstract fun bindMenuViewModel(mainViewModel: MenuViewModel): ViewModel
+    abstract fun bindMenuViewModel(menuViewModel: MenuViewModel): ViewModel
 
 }
