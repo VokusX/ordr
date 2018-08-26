@@ -10,4 +10,4 @@ data class User(@ColumnInfo(name = "name") val name: String,
                 @ColumnInfo(name = "familyName") val familyName: String,
                 @ColumnInfo(name = "email") val email: String,
                 @ColumnInfo(name = "id") @PrimaryKey val id: String,
-                @ColumnInfo(name = "photo") val photo: String)
+                @ColumnInfo(name = "pictures") val photo: String)

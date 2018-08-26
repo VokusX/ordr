@@ -26,11 +26,14 @@ class MenuActivity : AppCompatActivity() {
 
         setSupportActionBar(toolbar)
         supportActionBar?.setDisplayHomeAsUpEnabled(true)
+        supportActionBar?.title = "Menu"
 
         viewModel.menuData.observe(this, Observer {
             viewPager.adapter = MenuPager(supportFragmentManager, it)
             tabContainer.setupWithViewPager(viewPager)
         })
+
+        viewModel.getMenu(intent.extras!!.getString("uuid")!!)
     }
 
     override fun onOptionsItemSelected(item: MenuItem?): Boolean {

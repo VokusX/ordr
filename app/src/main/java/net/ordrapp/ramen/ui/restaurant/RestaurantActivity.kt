@@ -55,7 +55,8 @@ class RestaurantActivity : AppCompatActivity() {
 
         viewModel.getMenu(restaurant.uuid)
         viewModel.menuData.observe(this, Observer {
-            recyclerView.adapter = MenuAdapter(this@RestaurantActivity, it)
+            val sublist = it.subList(0, if (it.size <= 3) it.size else 3)
+            recyclerView.adapter = MenuAdapter(this@RestaurantActivity, sublist)
         })
 
         menuLink.setOnClickListener {

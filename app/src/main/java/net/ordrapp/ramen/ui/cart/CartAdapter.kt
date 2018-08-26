@@ -1,14 +1,11 @@
 package net.ordrapp.ramen.ui.cart
 
 import android.content.Context
-import android.text.Layout
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
-import androidx.appcompat.view.menu.ActionMenuItemView
 import androidx.recyclerview.widget.RecyclerView
 import com.bumptech.glide.Glide
-import kotlinx.android.synthetic.main.activity_restaurant.view.*
 import kotlinx.android.synthetic.main.menu_item_row.view.*
 import kotlinx.android.synthetic.main.restaurant_row.view.*
 import net.ordrapp.ramen.R
@@ -41,8 +38,8 @@ class CartAdapter(private val context: Context, var cartItems: List<CartItem> = 
             itemView.price.text = item.item.price.toString()
             itemView.multiplierText.text  = item.quantity.toString()
 
-            if(item.item.photo.isNotEmpty())
-                Glide.with(itemView).load(item.item.photo[0]).into(itemView.imageView2)
+            if(item.item.pictures.isNotEmpty())
+                Glide.with(itemView).load(item.item.pictures[0]).into(itemView.imageView2)
         }
     }
 }

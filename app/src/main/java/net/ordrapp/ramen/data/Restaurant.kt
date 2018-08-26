@@ -75,7 +75,7 @@ private val RESTAURANT_A = Restaurant("Restaurant A",
         Location(43.667631, -79.391873),
         listOf(Hour("monday", 800, 1500, "EST")),
         true,
-        listOf("https://images.unsplash.com/photo-1521017432531-fbd92d768814?ixlib=rb-0.3.5&ixid=eyJhcHBfaWQiOjEyMDd9&s=e813bc9e93c2b7ede92476a3eddf3606&auto=format&fit=crop&w=1500&q=80"))
+        listOf("https://images.unsplash.com/pictures-1521017432531-fbd92d768814?ixlib=rb-0.3.5&ixid=eyJhcHBfaWQiOjEyMDd9&s=e813bc9e93c2b7ede92476a3eddf3606&auto=format&fit=crop&w=1500&q=80"))
 
 private val RESTAURANT_B = Restaurant("Restaurant B",
         "UUIDForB",
@@ -86,7 +86,7 @@ private val RESTAURANT_B = Restaurant("Restaurant B",
         Location(43.667185, -79.394631),
         listOf(Hour("tuesday", 800, 1500, "EST")),
         true,
-        listOf("https://images.unsplash.com/photo-1449198063792-7d754d6f3c80?ixlib=rb-0.3.5&ixid=eyJhcHBfaWQiOjF9&s=34dc780dd28d924901482a86ebdda676&auto=format&fit=crop&w=1051&q=80"))
+        listOf("https://images.unsplash.com/pictures-1449198063792-7d754d6f3c80?ixlib=rb-0.3.5&ixid=eyJhcHBfaWQiOjF9&s=34dc780dd28d924901482a86ebdda676&auto=format&fit=crop&w=1051&q=80"))
 
 private val RESTAURANT_C = Restaurant("Restaurant C",
         "UUIDForC",
@@ -97,7 +97,7 @@ private val RESTAURANT_C = Restaurant("Restaurant C",
         Location(43.669205, -79.393574),
         listOf(Hour("thursday", 900, 2200, "EST")),
         true,
-        listOf("https://images.unsplash.com/photo-1516903022779-81a73028310f?ixlib=rb-0.3.5&ixid=eyJhcHBfaWQiOjEyMDd9&s=b5170ed4c4857dd6f0494cba2b47b7ee&auto=format&fit=crop&w=1185&q=80"))
+        listOf("https://images.unsplash.com/pictures-1516903022779-81a73028310f?ixlib=rb-0.3.5&ixid=eyJhcHBfaWQiOjEyMDd9&s=b5170ed4c4857dd6f0494cba2b47b7ee&auto=format&fit=crop&w=1185&q=80"))
 
 private val RESTAURANT_D = Restaurant("Top Hat HQ",
         "tophathq",
@@ -108,7 +108,7 @@ private val RESTAURANT_D = Restaurant("Top Hat HQ",
         Location(43.668602, -79.393138),
         listOf(Hour("friday", 900, 2200, "EST")),
         true,
-        listOf("https://images.unsplash.com/photo-1515346347659-f1dd36c261b7?ixlib=rb-0.3.5&ixid=eyJhcHBfaWQiOjEyMDd9&s=1e8af261faa466eb957a5b1210096003&auto=format&fit=crop&w=2394&q=80"))
+        listOf("https://images.unsplash.com/pictures-1515346347659-f1dd36c261b7?ixlib=rb-0.3.5&ixid=eyJhcHBfaWQiOjEyMDd9&s=1e8af261faa466eb957a5b1210096003&auto=format&fit=crop&w=2394&q=80"))
 
 
 val RESTAURANTS = listOf(RESTAURANT_D, RESTAURANT_A, RESTAURANT_B, RESTAURANT_C, RESTAURANT_B, RESTAURANT_A, RESTAURANT_B, RESTAURANT_C, RESTAURANT_A, RESTAURANT_B, RESTAURANT_C, RESTAURANT_A)

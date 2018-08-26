@@ -7,10 +7,8 @@ import android.view.ViewGroup
 import androidx.recyclerview.widget.RecyclerView
 import com.bumptech.glide.Glide
 import kotlinx.android.synthetic.main.menu_item_row.view.*
-import kotlinx.android.synthetic.main.restaurant_row.view.*
 import net.ordrapp.ramen.R
 import net.ordrapp.ramen.data.MenuItem
-import net.ordrapp.ramen.ui.restaurant.RestaurantViewModel
 
 class MenuAdapter(private val context: Context, var values: List<MenuItem>, val menuViewModel: MenuViewModel? = null)
     : RecyclerView.Adapter<MenuAdapter.ViewHolder>() {
@@ -26,7 +24,7 @@ class MenuAdapter(private val context: Context, var values: List<MenuItem>, val 
 
     inner class ViewHolder(itemView: View) : RecyclerView.ViewHolder(itemView) {
         fun bind(item: MenuItem) {
-            itemView.title.text = item.name
+            itemView.itemName.text = item.name
             itemView.itemCalories.text = item.calories.toString()
             itemView.price.text = item.price.toString()
             itemView.multiplierText.visibility = View.GONE
@@ -35,9 +33,9 @@ class MenuAdapter(private val context: Context, var values: List<MenuItem>, val 
                 itemView.relativeLayout.visibility = View.GONE
             }
 
-            if(item.photo.isNotEmpty()) {
-                Glide.with(itemView).load(item.photo[0]).into(itemView.imageView2)
-            }
+
+                Glide.with(itemView).load(item.pictures).into(itemView.imageView2)
+
         }
     }
 

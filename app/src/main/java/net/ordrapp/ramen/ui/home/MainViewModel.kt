@@ -63,6 +63,24 @@ class MainViewModel @Inject constructor(private val repository: MainRepository) 
                     listOf(net.ordrapp.ramen.data.Location(visibleRegion.latLngBounds.northeast), net.ordrapp.ramen.data.Location(visibleRegion.latLngBounds.southwest)), 25)
         }
         repository.getNearbyRestaurants(request)
+                .map { response ->
+                    if (_userLocation.value != null) {
+                        val list = ArrayList(response.restaurants)
+
+                        list.sortBy {
+                            val dummyLocation = android.location.Location("dummy").apply {
+                                latitude = it.location.lat
+                                longitude = it.location.lon
+                            }
+
+                            val distance = _userLocation.value!!.distanceTo(dummyLocation)
+                            distance
+                        }
+
+                        response.restaurants = list
+                    }
+                    response
+                }
                 .subscribe(
                         {
                             Log.d("MainActivity", it.restaurants.size.toString())
