@@ -87,4 +87,8 @@ class OnboardingActivity : AppCompatActivity() {
         private const val RC_SIGN_IN = 420
         const val USER_ID_KEY = "user_id"
     }
+
+    override fun onBackPressed() {
+        //do nothing on back press. there is no going back from the onboard...
+    }
 }

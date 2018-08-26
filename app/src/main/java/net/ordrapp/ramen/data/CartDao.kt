@@ -1,9 +1,6 @@
 package net.ordrapp.ramen.data
 
-import androidx.room.Dao
-import androidx.room.Insert
-import androidx.room.Query
-import androidx.room.Update
+import androidx.room.*
 import io.reactivex.Flowable
 
 @Dao
@@ -21,4 +18,7 @@ interface CartDao {
 
     @Query("DELETE FROM cart")
     fun clearCart()
+
+    @Delete
+    fun deleteItem(item: CartItem)
 }

@@ -5,6 +5,7 @@ import android.os.Bundle
 import androidx.lifecycle.ViewModelProvider
 import androidx.lifecycle.ViewModelProviders
 import dagger.android.AndroidInjection
+import kotlinx.android.synthetic.main.activity_cart.*
 import net.ordrapp.ramen.R
 import javax.inject.Inject
 
@@ -20,5 +21,9 @@ class CartActivity : AppCompatActivity() {
         setContentView(R.layout.activity_cart)
 
         viewModel = ViewModelProviders.of(this, viewModelFactory)[CartViewModel::class.java]
+        setSupportActionBar(toolbarCart)
+        supportActionBar?.setDisplayHomeAsUpEnabled(true)
+
+
     }
 }

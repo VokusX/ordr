@@ -93,7 +93,6 @@ class MainActivity : AppCompatActivity() {
             }
         }
 
-        // TODO: Remove dummy data and allow server to provide all data.
         resultsList.adapter = RestaurantAdapter(this, viewModel.userLocation.value)
 
         viewModel.restaurantsData.observe(this, Observer {
