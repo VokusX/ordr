@@ -45,8 +45,10 @@
             android:resource="@array/preloaded_fonts" />
 
         <activity android:name=".ui.OnboardingActivity" />
-        <activity android:name=".ui.restaurant.RestaurantActivity"
-            android:theme="@style/AppTheme.TransparentStatusBar"/>
+        <activity
+            android:name=".ui.restaurant.RestaurantActivity"
+            android:theme="@style/AppTheme.TransparentStatusBar" />
+        <activity android:name=".ui.menu.MenuActivity"></activity>
     </application>
 
 </manifest>

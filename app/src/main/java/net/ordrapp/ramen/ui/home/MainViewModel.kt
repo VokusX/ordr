@@ -14,6 +14,7 @@ import io.reactivex.rxkotlin.addTo
 import io.reactivex.schedulers.Schedulers
 import net.ordrapp.ramen.data.NearbyRestaurantsRequest
 import net.ordrapp.ramen.data.Restaurant
+import net.ordrapp.ramen.data.User
 import net.ordrapp.ramen.repository.MainRepository
 import java.util.concurrent.TimeUnit
 import javax.inject.Inject
@@ -31,6 +32,9 @@ class MainViewModel @Inject constructor(private val repository: MainRepository) 
 
     private val _isLoading = MutableLiveData<Boolean>()
     val isLoading: LiveData<Boolean> = _isLoading
+
+    private val _userData = MutableLiveData<User>()
+    val userData: LiveData<User> = _userData
 
     private val disposables = CompositeDisposable()
 
@@ -69,6 +73,12 @@ class MainViewModel @Inject constructor(private val repository: MainRepository) 
                             it.printStackTrace()
                             _isLoading.postValue(false)
                         })
+                .addTo(disposables)
+    }
+
+    fun getUser(id: String) {
+        repository.getUserById(id)
+                .subscribe (_userData::postValue)
                 .addTo(disposables)
     }
 

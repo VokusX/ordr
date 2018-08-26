@@ -1,6 +1,7 @@
 package net.ordrapp.ramen
 
 import android.Manifest
+import android.app.Activity
 import android.content.Intent
 import android.content.pm.PackageManager
 import android.location.Location
@@ -15,6 +16,7 @@ import androidx.core.view.GravityCompat
 import androidx.lifecycle.Observer
 import androidx.lifecycle.ViewModelProvider
 import androidx.lifecycle.ViewModelProviders
+import com.google.android.gms.auth.api.signin.GoogleSignIn
 import com.google.android.gms.location.FusedLocationProviderClient
 import com.google.android.gms.location.LocationServices
 import com.google.android.gms.maps.CameraUpdateFactory
@@ -24,6 +26,7 @@ import com.google.android.material.bottomsheet.BottomSheetBehavior
 import com.google.firebase.auth.FirebaseAuth
 import dagger.android.AndroidInjection
 import kotlinx.android.synthetic.main.activity_main.*
+import kotlinx.android.synthetic.main.nav_header.*
 import net.ordrapp.ramen.data.RESTAURANTS
 import net.ordrapp.ramen.ui.OnboardingActivity
 import net.ordrapp.ramen.ui.home.MainViewModel
@@ -69,9 +72,11 @@ class MainActivity : AppCompatActivity() {
             true
         }
 
-        val auth = FirebaseAuth.getInstance()
-        if (auth.currentUser == null) {
-            startActivity(Intent(this, OnboardingActivity::class.java))
+        val account = GoogleSignIn.getLastSignedInAccount(this)
+        if (account == null) {
+            startActivityForResult(Intent(this, OnboardingActivity::class.java), 10)
+        } else {
+            viewModel.getUser(account.id!!)
         }
 
         if (ContextCompat.checkSelfPermission(this, Manifest.permission.ACCESS_FINE_LOCATION)
@@ -114,6 +119,13 @@ class MainActivity : AppCompatActivity() {
 
         viewModel.isLoading.observe(this, Observer {
             progressBar.visibility = if (it == true) View.VISIBLE else View.GONE
+        })
+
+        viewModel.userData.observe(this, Observer {
+            it ?: return@Observer
+
+            emailText.text = it.email
+            displayName.text = it.name
         })
 
         mapView.onCreate(savedInstanceState)
@@ -209,6 +221,15 @@ class MainActivity : AppCompatActivity() {
                 fusedLocationClient.lastLocation.addOnSuccessListener {
                     viewModel.updateUserLocation(it)
                 }
+            }
+        }
+    }
+
+    override fun onActivityResult(requestCode: Int, resultCode: Int, data: Intent?) {
+        if (requestCode == 10 && resultCode == Activity.RESULT_OK) {
+            val userId = data?.getStringExtra(OnboardingActivity.USER_ID_KEY)
+            if (userId != null) {
+                viewModel.getUser(userId)
             }
         }
     }
