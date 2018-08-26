@@ -8,6 +8,7 @@ import net.ordrapp.ramen.MainActivity
 import net.ordrapp.ramen.ui.OnboardingActivity
 import net.ordrapp.ramen.ui.cart.CartActivity
 import net.ordrapp.ramen.ui.menu.MenuActivity
+import net.ordrapp.ramen.ui.menu.MenuFragment
 import net.ordrapp.ramen.ui.restaurant.RestaurantActivity
 
 @Module
@@ -30,5 +31,8 @@ abstract class BuildersModule {
 
     @ContributesAndroidInjector
     abstract fun bindMenuActivity(): MenuActivity
+
+    @ContributesAndroidInjector
+    abstract fun bindMenuFragment(): MenuFragment
 
 }

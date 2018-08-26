@@ -13,6 +13,7 @@ import dagger.android.AndroidInjection
 import kotlinx.android.synthetic.main.activity_restaurant.*
 import net.ordrapp.ramen.R
 import net.ordrapp.ramen.data.Restaurant
+import net.ordrapp.ramen.ui.menu.MenuActivity
 import net.ordrapp.ramen.ui.menu.MenuAdapter
 import javax.inject.Inject
 
@@ -56,6 +57,13 @@ class RestaurantActivity : AppCompatActivity() {
         viewModel.menuData.observe(this, Observer {
             recyclerView.adapter = MenuAdapter(this@RestaurantActivity, it)
         })
+
+        menuLink.setOnClickListener {
+            val intent = Intent(this, MenuActivity::class.java)
+            intent.putExtra("uuid", restaurant.uuid)
+
+            startActivity(intent)
+        }
     }
 
     override fun onOptionsItemSelected(item: MenuItem?): Boolean {
