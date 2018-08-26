@@ -64,7 +64,6 @@ class OnboardingActivity : AppCompatActivity() {
                 )
 
                 runOnIoThread {
-                    //TODO Get user data from response and send to database
                     database.userDao().insertUser(user)
                 }
 
