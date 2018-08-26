@@ -6,6 +6,9 @@ import dagger.Module
 import dagger.android.ContributesAndroidInjector
 import net.ordrapp.ramen.MainActivity
 import net.ordrapp.ramen.ui.OnboardingActivity
+import net.ordrapp.ramen.ui.cart.CartActivity
+import net.ordrapp.ramen.ui.menu.MenuActivity
+import net.ordrapp.ramen.ui.restaurant.RestaurantActivity
 
 @Module
 abstract class BuildersModule {
@@ -18,5 +21,14 @@ abstract class BuildersModule {
 
     @ContributesAndroidInjector
     abstract fun bindOnboardingActivity(): OnboardingActivity
+
+    @ContributesAndroidInjector
+    abstract fun bindCartActivity(): CartActivity
+
+    @ContributesAndroidInjector
+    abstract fun bindRestaurantActivity(): RestaurantActivity
+
+    @ContributesAndroidInjector
+    abstract fun bindMenuActivity(): MenuActivity
 
 }
